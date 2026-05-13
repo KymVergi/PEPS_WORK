@@ -3,15 +3,13 @@
 import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
-import { ConnectButton } from '@rainbow-me/rainbowkit'
+import ConnectWallet from './ConnectWallet'
+import { useTrading } from '@/hooks/useTrading'
 import styles from './TopBar.module.css'
 
 export default function TopBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  // Mock prices (estos luego vendrán de oracles)
-  const pepsPrice = 0.85
-  const oraclePrice = 1247.82
+  const { currentPrice, curveLevel } = useTrading()
 
   return (
     <div className={styles.topbar}>
@@ -26,27 +24,26 @@ export default function TopBar() {
         <div className={styles.stats}>
           <div className={styles.statItem}>
             <span className={styles.statLabel}>PEPS</span>
-            <span className={styles.statValue}>${pepsPrice.toFixed(2)}</span>
+            <span className={styles.statValue}>
+              {currentPrice > 0 ? `${currentPrice.toFixed(6)} ETH` : '—'}
+            </span>
           </div>
           <div className={styles.statDivider} />
           <div className={styles.statItem}>
-            <span className={styles.statLabel}>Oracle</span>
+            <span className={styles.statLabel}>Curva</span>
             <span className={`${styles.statValue} ${styles.positive}`}>
-              ${oraclePrice.toFixed(2)}
+              {curveLevel > 0 ? `${curveLevel.toFixed(3)} ETH` : '—'}
             </span>
           </div>
         </div>
 
-        {/* Wallet - Using RainbowKit */}
+        {/* Wallet */}
         <div className={styles.walletSection}>
-          <ConnectButton 
-            chainStatus="icon"
-            showBalance={false}
-          />
+          <ConnectWallet />
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button 
+        <button
           className={styles.menuToggle}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
@@ -60,12 +57,19 @@ export default function TopBar() {
           <div className={styles.mobileStats}>
             <div className={styles.mobileStatItem}>
               <span className={styles.statLabel}>PEPS Price</span>
-              <span className={styles.statValue}>${pepsPrice.toFixed(2)}</span>
+              <span className={styles.statValue}>
+                {currentPrice > 0 ? `${currentPrice.toFixed(6)} ETH` : '—'}
+              </span>
             </div>
             <div className={styles.mobileStatItem}>
-              <span className={styles.statLabel}>Oracle Price</span>
-              <span className={styles.statValue}>${oraclePrice.toFixed(2)}</span>
+              <span className={styles.statLabel}>Nivel Curva</span>
+              <span className={styles.statValue}>
+                {curveLevel > 0 ? `${curveLevel.toFixed(3)} ETH` : '—'}
+              </span>
             </div>
+          </div>
+          <div className={styles.mobileWallet}>
+            <ConnectWallet />
           </div>
         </div>
       )}

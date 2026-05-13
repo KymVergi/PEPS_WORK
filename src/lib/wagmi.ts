@@ -1,18 +1,20 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { createConfig, http } from 'wagmi'
 import { mainnet, sepolia, arbitrum, base } from 'wagmi/chains'
+import { injected } from 'wagmi/connectors'
 
-if (!process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID) {
-  throw new Error('NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID is not set')
-}
-
-export const config = getDefaultConfig({
-  appName: '$PEPS - Peptide Perps',
-  projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+export const config = createConfig({
   chains: [
     mainnet,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
     arbitrum,
     base,
   ],
-  ssr: true, // Enable server-side rendering
+  connectors: [injected()],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+    [arbitrum.id]: http(),
+    [base.id]: http(),
+  },
+  ssr: true,
 })

@@ -12,16 +12,92 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding-bottom: var(--spacing-md);
   border-bottom: 1px solid var(--color-border);
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text-primary);
 }
+
+.priceChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  border-radius: var(--radius-sm);
+}
+
+.priceLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+}
+
+.priceValue {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-neon-blue);
+}
+
+.assetLabel {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  padding: 0 var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+.borrowNote {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  margin-top: calc(var(--spacing-xs) * -1);
+}
+
+.capacityNote {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--color-text-tertiary);
+  margin-top: calc(var(--spacing-xs) * -1);
+}
+
+.warningYellow {
+  background: rgba(255, 200, 0, 0.08);
+  border-color: rgba(255, 200, 0, 0.3);
+}
+
+.warningYellow svg {
+  color: #ffc800;
+}
+
+/* Health factor colors */
+.healthSafe    { color: var(--color-neon-green) !important; }
+.healthModerate { color: #9aee6a !important; }
+.healthHigh    { color: #ff9800 !important; }
+.healthCritical { color: #ff4444 !important; }
 
 /* ==========================================
    POSITION TOGGLE

@@ -1,48 +1,48 @@
-// Types for the Peptide Perps platform
+// Types for Uniperp - PEPS perpetuals on bonding curve
 
-export type PositionType = 'long' | 'short'
-
-export type CollateralType = 'ETH' | 'PEPS'
-
+// On-chain position struct (mirrors UniperpHook.Position)
 export interface Position {
-  id: string
-  type: PositionType
-  size: number
-  leverage: number
-  collateral: number
-  collateralType: CollateralType
-  entryPrice: number
-  currentPrice: number
-  liquidationPrice: number
-  pnl: number
-  pnlPercent: number
-  timestamp: number
+  collateral: bigint    // ETH collateral deposited
+  holding: bigint       // PERP tokens held
+  debt: bigint          // ETH debt owed to curve
+  leverage: bigint      // Leverage multiplier (2-5)
+  entryPrice: bigint    // Entry price in wei per PERP
+  openBlock: bigint     // Block when opened
   isOpen: boolean
 }
 
-export interface OracleData {
-  currentPrice: number
-  change24h: number
-  changePercent24h: number
-  high24h: number
-  low24h: number
-  volume24h: number
-  lastUpdate: number
+// Derived position data for display
+export interface PositionDisplay {
+  collateralETH: number
+  holdingPERP: number
+  debtETH: number
+  leverage: number
+  entryPriceETH: number
+  currentPriceETH: number
+  liqPriceETH: number
+  health: number        // health ratio (e.g. 150 = 150%)
+  pnlETH: number
+  pnlPercent: number
+  isOpen: boolean
 }
 
-export interface UserStats {
-  totalPositionsOpened: number
-  totalVolume: number
-  totalPnl: number
-  winRate: number
-  avgLeverage: number
+// Bonding curve / market data
+export interface CurveData {
+  currentPrice: number   // ETH per PERP (from getCurrentPrice)
+  twapPrice: number      // TWAP price (from getTWAPPrice)
+  curveLevel: number     // Total ETH flowed into curve (wei → ETH)
+  realPerpInCurve: number
+  totalBorrowCapacity: number
+  badDebt: number
+  leverageUnlocked: boolean
 }
 
+// User staking data
 export interface StakingData {
-  stakedAmount: number
-  rewardsEarned: number
-  apy: number
-  lockEndDate?: number
+  stakedPERP: number
+  pendingETH: number     // Pending ETH rewards
+  claimableETH: number   // Already claimable ETH
+  totalStakedProtocol: number
 }
 
 export interface WalletData {
@@ -52,19 +52,18 @@ export interface WalletData {
   isConnected: boolean
 }
 
-export interface TradeParams {
-  type: PositionType
-  collateralAmount: number
-  collateralType: CollateralType
-  leverage: number
-  slippage?: number
+// Parameters for opening a position
+export interface OpenPositionParams {
+  collateralETH: string   // ETH amount as string input
+  leverage: number        // 2 | 3 | 4 | 5
 }
 
-export interface CalculatedPosition {
-  positionSize: number
-  entryPrice: number
-  liquidationPrice: number
-  healthFactor: number
-  estimatedFee: number
-  requiredCollateral: number
+// Calculated position preview (before submitting)
+export interface PositionPreview {
+  totalBuyETH: number      // collateral + borrowed
+  estimatedPERP: number    // approximate PERP received
+  borrowAmount: number     // ETH borrowed from bands
+  originationFee: number   // 1% of borrow
+  liqPriceApprox: number   // approximate liquidation price
+  healthApprox: number     // approximate starting health
 }

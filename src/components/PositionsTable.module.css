@@ -14,10 +14,25 @@
 }
 
 .title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
   font-family: var(--font-display);
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-text-primary);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--color-neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.4);
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.05em;
 }
 
 .count {
@@ -123,8 +138,65 @@
   color: var(--color-neon-blue);
 }
 
-.liquidation {
+.liqCell {
   color: #ff9800;
+}
+
+.debtCell {
+  color: var(--color-text-secondary);
+}
+
+/* Health badge */
+.healthBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.healthSafe {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--color-neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.healthModerate {
+  background: rgba(154, 238, 106, 0.12);
+  color: #9aee6a;
+  border: 1px solid rgba(154, 238, 106, 0.3);
+}
+
+.healthHigh {
+  background: rgba(255, 152, 0, 0.12);
+  color: #ff9800;
+  border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.healthCritical {
+  background: rgba(255, 68, 68, 0.12);
+  color: #ff4444;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+/* Liquidation warning banner */
+.liquidationWarning {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: rgba(255, 68, 68, 0.1);
+  border-top: 1px solid rgba(255, 68, 68, 0.3);
+  font-size: 0.85rem;
+  color: #ff6666;
+}
+
+.liquidationWarning svg {
+  flex-shrink: 0;
+  color: #ff4444;
 }
 
 /* ==========================================

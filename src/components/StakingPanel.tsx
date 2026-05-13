@@ -1,53 +1,48 @@
 'use client'
 
 import { useState } from 'react'
-import { Lock, Unlock, Info } from 'lucide-react'
+import { Lock, Unlock, Coins, Info } from 'lucide-react'
+import { useAccount } from 'wagmi'
+import { useStaking } from '@/hooks/useStaking'
+import { useTokenBalance } from '@/hooks/useTokenBalance'
 import styles from './StakingPanel.module.css'
 
 type StakingAction = 'stake' | 'unstake'
 
 export default function StakingPanel() {
+  const { isConnected } = useAccount()
+  const { stakedPERP, pendingETH, claimableETH, stake, unstake, claimRewards, isConfirming } = useStaking()
+  const { pepsBalance } = useTokenBalance()
+
   const [action, setAction] = useState<StakingAction>('stake')
   const [amount, setAmount] = useState<string>('')
-  const [lockPeriod, setLockPeriod] = useState<number>(30)
 
-  // Mock data
-  const pepsBalance = 15420.50
-  const stakedBalance = 8500.00
-  const pepsPrice = 0.85
+  const maxAmount = action === 'stake' ? pepsBalance : stakedPERP
+  const totalRewards = pendingETH + claimableETH
 
-  const lockPeriods = [
-    { days: 30, apy: 12.5 },
-    { days: 90, apy: 18.0 },
-    { days: 180, apy: 25.0 },
-    { days: 365, apy: 35.0 },
-  ]
-
-  const maxAmount = action === 'stake' ? pepsBalance : stakedBalance
-  const selectedAPY = lockPeriods.find(p => p.days === lockPeriod)?.apy || 0
-
-  const handleSubmit = () => {
-    console.log('Staking action:', { action, amount, lockPeriod })
-    // Aquí se conectará con el smart contract
+  const handleSubmit = async () => {
+    if (!amount || parseFloat(amount) <= 0) return
+    if (action === 'stake') {
+      await stake(amount)
+    } else {
+      await unstake(amount)
+    }
+    setAmount('')
   }
-
-  const handleMaxClick = () => {
-    setAmount(maxAmount.toString())
-  }
-
-  const estimatedRewards = amount 
-    ? (parseFloat(amount) * selectedAPY / 100 * lockPeriod / 365).toFixed(2)
-    : '0.00'
 
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
         <h2 className={styles.title}>
-          {action === 'stake' ? 'Stake $PEPS' : 'Unstake $PEPS'}
+          {action === 'stake' ? (
+            <><Lock size={20} /> Stake $PEPS</>
+          ) : (
+            <><Unlock size={20} /> Unstake $PEPS</>
+          )}
         </h2>
       </div>
 
-      {/* Action Toggle */}
+      {/* Stake / Unstake Toggle */}
       <div className={styles.actionToggle}>
         <button
           className={`${styles.toggleBtn} ${action === 'stake' ? styles.activeStake : ''}`}
@@ -65,29 +60,6 @@ export default function StakingPanel() {
         </button>
       </div>
 
-      {/* Lock Period (only for staking) */}
-      {action === 'stake' && (
-        <div className={styles.section}>
-          <label className={styles.label}>
-            Lock Period
-            <span className={styles.apyBadge}>{selectedAPY}% APY</span>
-          </label>
-          <div className={styles.periodButtons}>
-            {lockPeriods.map((period) => (
-              <button
-                key={period.days}
-                className={`${styles.periodBtn} ${lockPeriod === period.days ? styles.active : ''}`}
-                onClick={() => setLockPeriod(period.days)}
-              >
-                <span className={styles.periodDays}>{period.days}</span>
-                <span className={styles.periodLabel}>days</span>
-                <span className={styles.periodApy}>{period.apy}%</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Amount Input */}
       <div className={styles.section}>
         <label className={styles.label}>Amount</label>
@@ -98,75 +70,68 @@ export default function StakingPanel() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className={styles.input}
-            step="0.01"
+            step="1"
             min="0"
             max={maxAmount}
+            disabled={isConfirming || !isConnected}
           />
-          <div className={styles.inputSuffix}>
-            <span className={styles.assetSymbol}>PEPS</span>
-          </div>
+          <span className={styles.inputSuffix}>PEPS</span>
         </div>
         <div className={styles.balance}>
           <span>
-            {action === 'stake' ? 'Available' : 'Staked'}: {maxAmount.toLocaleString()} PEPS
+            {action === 'stake' ? 'Available' : 'Staked'}:{' '}
+            {maxAmount.toLocaleString(undefined, { maximumFractionDigits: 2 })} PEPS
           </span>
-          <button className={styles.maxBtn} onClick={handleMaxClick}>
+          <button className={styles.maxBtn} onClick={() => setAmount(maxAmount.toString())}>
             MAX
           </button>
         </div>
-        {amount && (
-          <div className={styles.usdValue}>
-            ≈ ${(parseFloat(amount) * pepsPrice).toFixed(2)} USD
-          </div>
-        )}
       </div>
 
-      {/* Estimated Rewards */}
-      {action === 'stake' && amount && (
+      {/* Rewards card */}
+      {isConnected && totalRewards > 0 && (
         <div className={styles.rewardsCard}>
           <div className={styles.rewardsRow}>
-            <span className={styles.rewardsLabel}>Estimated Rewards</span>
-            <span className={styles.rewardsValue}>
-              {estimatedRewards} PEPS
+            <span className={styles.rewardsLabel}>
+              <Coins size={15} />
+              Pending rewards
             </span>
+            <span className={styles.rewardsValue}>{totalRewards.toFixed(6)} ETH</span>
           </div>
-          <div className={styles.rewardsRow}>
-            <span className={styles.rewardsLabel}>Lock Until</span>
-            <span className={styles.rewardsValue}>
-              {new Date(Date.now() + lockPeriod * 24 * 60 * 60 * 1000).toLocaleDateString()}
-            </span>
-          </div>
+          <button
+            className={styles.claimBtn}
+            onClick={claimRewards}
+            disabled={isConfirming}
+          >
+            <Coins size={16} />
+            {isConfirming ? 'Processing...' : 'Claim ETH'}
+          </button>
         </div>
       )}
 
-      {/* Submit Button */}
+      {/* Submit */}
       <button
         className={`${styles.submitBtn} ${action === 'stake' ? styles.submitStake : styles.submitUnstake}`}
         onClick={handleSubmit}
-        disabled={!amount || parseFloat(amount) <= 0 || parseFloat(amount) > maxAmount}
+        disabled={!isConnected || !amount || parseFloat(amount) <= 0 || parseFloat(amount) > maxAmount || isConfirming}
       >
-        {action === 'stake' ? (
-          <>
-            <Lock size={20} />
-            Stake PEPS
-          </>
+        {isConfirming ? (
+          'Processing...'
+        ) : action === 'stake' ? (
+          <><Lock size={20} /> Stake PEPS</>
         ) : (
-          <>
-            <Unlock size={20} />
-            Unstake PEPS
-          </>
+          <><Unlock size={20} /> Unstake PEPS</>
         )}
       </button>
 
       {/* Info */}
-      {action === 'unstake' && (
-        <div className={styles.warning}>
-          <Info size={16} />
-          <span>
-            Unstaking has a 7-day cooldown period. Your tokens will be available after this period.
-          </span>
-        </div>
-      )}
+      <div className={styles.infoBox}>
+        <Info size={15} />
+        <span>
+          By staking PEPS you earn a share of the position open and close fees
+          (1% each), paid in ETH. No lock period required.
+        </span>
+      </div>
     </div>
   )
 }

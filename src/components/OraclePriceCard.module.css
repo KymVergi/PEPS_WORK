@@ -54,6 +54,29 @@
   border-radius: var(--radius-sm);
 }
 
+.statusChip {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.unlocked {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--color-neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.locked {
+  background: rgba(255, 200, 0, 0.1);
+  color: #ffc800;
+  border: 1px solid rgba(255, 200, 0, 0.3);
+}
+
 /* ==========================================
    PRICE SECTION
    ========================================== */
@@ -73,10 +96,12 @@
 }
 
 .currency {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  align-self: flex-end;
+  padding-bottom: 0.5rem;
 }
 
 .price {
@@ -120,6 +145,70 @@
 .changeAmount {
   font-size: 0.9rem;
   opacity: 0.8;
+}
+
+/* ==========================================
+   CURVE PROGRESS
+   ========================================== */
+
+.curveSection {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.curveHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.curveLabel {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+.curveValue {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-neon-blue);
+}
+
+.progressBar {
+  position: relative;
+  height: 10px;
+  background: var(--color-bg-elevated);
+  border-radius: 5px;
+  overflow: visible;
+  margin-bottom: var(--spacing-sm);
+}
+
+.progressFill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+.leverageMarker {
+  position: absolute;
+  top: -4px;
+  width: 3px;
+  height: 18px;
+  background: #ffc800;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 200, 0, 0.6);
+}
+
+.progressLabels {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-tertiary);
 }
 
 /* ==========================================

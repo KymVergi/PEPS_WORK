@@ -1,108 +1,100 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { TrendingUp, TrendingDown, Info } from 'lucide-react'
+import { TrendingUp, Info, AlertTriangle, Lock } from 'lucide-react'
 import { useAccount } from 'wagmi'
 import { useTrading } from '@/hooks/useTrading'
 import { useTokenBalance } from '@/hooks/useTokenBalance'
 import styles from './TradingPanel.module.css'
 
-type PositionType = 'long' | 'short'
-type CollateralType = 'ETH' | 'PEPS'
+// Protocol constants (mirrors UniperpHook)
+const ORIGINATION_FEE_BPS = 100  // 1%
+const CLOSE_FEE_BPS = 100        // 1%
+const LIQUIDATION_THRESHOLD = 105 // 105%
 
 export default function TradingPanel() {
   const { isConnected } = useAccount()
-  const { openPosition, isConfirming } = useTrading()
-  const { ethBalance, pepsBalance } = useTokenBalance()
+  const { openPosition, isConfirming, currentPrice, leverageUnlocked, borrowCapacity } = useTrading()
+  const { ethBalance } = useTokenBalance()
 
-  const [positionType, setPositionType] = useState<PositionType>('long')
-  const [leverage, setLeverage] = useState<number>(3)
+  const [leverage, setLeverage] = useState<number>(2)
   const [collateralAmount, setCollateralAmount] = useState<string>('')
-  const [collateralType, setCollateralType] = useState<CollateralType>('ETH')
 
-  // Mock prices - En producción vendrán del oracle
-  const ethPrice = 2450.00
-  const pepsPrice = 0.85
-  const oraclePrice = 1247.82
+  // Real-time position preview calculations
+  const preview = useMemo(() => {
+    const collateral = parseFloat(collateralAmount) || 0
+    if (collateral <= 0 || currentPrice <= 0) {
+      return null
+    }
 
-  // Get actual balance based on collateral type
-  const actualBalance = collateralType === 'ETH' ? ethBalance : pepsBalance
+    const borrowAmount = collateral * (leverage - 1)
+    const originationFee = (borrowAmount * ORIGINATION_FEE_BPS) / 10000
+    const effectiveCollateral = collateral - originationFee
+    const totalBuyETH = effectiveCollateral + borrowAmount
+    const estimatedPERP = totalBuyETH / currentPrice
 
-  // Calculations
-  const calculations = useMemo(() => {
-    const amount = parseFloat(collateralAmount) || 0
-    const collateralValue = collateralType === 'ETH' 
-      ? amount * ethPrice 
-      : amount * pepsPrice
+    // Liq price: 1.05 × debt / holding
+    const liqPrice = (LIQUIDATION_THRESHOLD * borrowAmount) / (estimatedPERP * 100)
 
-    const positionSize = collateralValue * leverage
-    const entryPrice = oraclePrice
-    const liquidationMultiplier = positionType === 'long' 
-      ? 1 - (1 / leverage) + 0.01 
-      : 1 + (1 / leverage) - 0.01
-    const liquidationPrice = entryPrice * liquidationMultiplier
-    const healthFactor = leverage > 1 ? (100 / leverage).toFixed(1) : '100.0'
-    const estimatedFee = positionSize * 0.001 // 0.1% fee
+    // Approximate health at entry: (holding × entryPrice × 100) / debt
+    const health = borrowAmount > 0
+      ? Math.floor((estimatedPERP * currentPrice * 100) / borrowAmount)
+      : 999
 
     return {
-      positionSize: positionSize.toFixed(2),
-      entryPrice: entryPrice.toFixed(2),
-      liquidationPrice: liquidationPrice.toFixed(2),
-      healthFactor,
-      estimatedFee: estimatedFee.toFixed(2),
+      borrowAmount,
+      originationFee,
+      totalBuyETH,
+      estimatedPERP,
+      liqPrice,
+      health,
+      closeFeeEst: (collateral * CLOSE_FEE_BPS) / 10000,
     }
-  }, [collateralAmount, collateralType, leverage, positionType, ethPrice, pepsPrice, oraclePrice])
+  }, [collateralAmount, leverage, currentPrice])
 
   const handleSubmit = async () => {
-    if (!isConnected) {
-      alert('Please connect your wallet first')
-      return
-    }
-
-    await openPosition({
-      isLong: positionType === 'long',
-      collateralAmount,
-      leverage,
-      collateralToken: collateralType,
-    })
-
-    // Clear form on success
+    if (!isConnected || !collateralAmount) return
+    await openPosition({ collateralETH: collateralAmount, leverage })
     setCollateralAmount('')
   }
 
-  const handleMaxClick = () => {
-    setCollateralAmount(actualBalance.toFixed(6))
-  }
+  const isButtonDisabled =
+    !isConnected ||
+    !collateralAmount ||
+    parseFloat(collateralAmount) <= 0 ||
+    parseFloat(collateralAmount) > ethBalance ||
+    !leverageUnlocked ||
+    isConfirming
 
-  const isButtonDisabled = !isConnected || 
-                          !collateralAmount || 
-                          parseFloat(collateralAmount) <= 0 || 
-                          parseFloat(collateralAmount) > actualBalance ||
-                          isConfirming
+  const healthColor = (h: number) => {
+    if (h > 150) return styles.healthSafe
+    if (h > 120) return styles.healthModerate
+    if (h > 110) return styles.healthHigh
+    return styles.healthCritical
+  }
 
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
-        <h2 className={styles.title}>Open Position</h2>
+        <h2 className={styles.title}>
+          <TrendingUp size={20} />
+          Open Long Position
+        </h2>
+        <div className={styles.priceChip}>
+          <span className={styles.priceLabel}>PEPS</span>
+          <span className={styles.priceValue}>
+            {currentPrice > 0 ? currentPrice.toFixed(6) : '—'} ETH
+          </span>
+        </div>
       </div>
 
-      {/* Position Type Toggle */}
-      <div className={styles.positionToggle}>
-        <button
-          className={`${styles.toggleBtn} ${positionType === 'long' ? styles.activeLong : ''}`}
-          onClick={() => setPositionType('long')}
-        >
-          <TrendingUp size={20} />
-          Long
-        </button>
-        <button
-          className={`${styles.toggleBtn} ${positionType === 'short' ? styles.activeShort : ''}`}
-          onClick={() => setPositionType('short')}
-        >
-          <TrendingDown size={20} />
-          Short
-        </button>
-      </div>
+      {/* Leverage unlock warning */}
+      {!leverageUnlocked && (
+        <div className={`${styles.warning} ${styles.warningYellow}`}>
+          <Lock size={16} />
+          <span>Leverage unlocks once the curve surpasses 5 ETH</span>
+        </div>
+      )}
 
       {/* Leverage Selector */}
       <div className={styles.section}>
@@ -121,11 +113,17 @@ export default function TradingPanel() {
             </button>
           ))}
         </div>
+        {preview && (
+          <p className={styles.borrowNote}>
+            Borrow: {preview.borrowAmount.toFixed(4)} ETH
+            · Entry fee: {preview.originationFee.toFixed(5)} ETH
+          </p>
+        )}
       </div>
 
-      {/* Collateral Input */}
+      {/* ETH Collateral Input */}
       <div className={styles.section}>
-        <label className={styles.label}>Collateral</label>
+        <label className={styles.label}>Collateral (ETH)</label>
         <div className={styles.inputGroup}>
           <input
             type="number"
@@ -133,96 +131,96 @@ export default function TradingPanel() {
             value={collateralAmount}
             onChange={(e) => setCollateralAmount(e.target.value)}
             className={styles.input}
-            step="0.01"
+            step="0.001"
             min="0"
-            disabled={isConfirming}
+            disabled={isConfirming || !leverageUnlocked}
           />
-          <div className={styles.assetToggle}>
-            <button
-              className={`${styles.assetBtn} ${collateralType === 'ETH' ? styles.activeAsset : ''}`}
-              onClick={() => setCollateralType('ETH')}
-            >
-              ETH
-            </button>
-            <button
-              className={`${styles.assetBtn} ${collateralType === 'PEPS' ? styles.activeAsset : ''}`}
-              onClick={() => setCollateralType('PEPS')}
-            >
-              PEPS
-            </button>
-          </div>
+          <span className={styles.assetLabel}>ETH</span>
         </div>
         <div className={styles.balance}>
-          <span>Balance: {actualBalance.toFixed(4)} {collateralType}</span>
-          <button className={styles.maxBtn} onClick={handleMaxClick}>
+          <span>Balance: {ethBalance.toFixed(5)} ETH</span>
+          <button
+            className={styles.maxBtn}
+            onClick={() => setCollateralAmount(ethBalance.toFixed(6))}
+          >
             MAX
           </button>
         </div>
+        {borrowCapacity > 0 && (
+          <p className={styles.capacityNote}>
+            Available borrow capacity: {borrowCapacity.toFixed(4)} ETH
+          </p>
+        )}
       </div>
 
-      {/* Calculations */}
-      <div className={styles.calculations}>
-        <div className={styles.calcRow}>
-          <span className={styles.calcLabel}>Position Size</span>
-          <span className={styles.calcValue}>${calculations.positionSize}</span>
+      {/* Position Preview */}
+      {preview && (
+        <div className={styles.calculations}>
+          <div className={styles.calcRow}>
+            <span className={styles.calcLabel}>Est. PERP</span>
+            <span className={styles.calcValue}>{preview.estimatedPERP.toFixed(2)} PERP</span>
+          </div>
+          <div className={styles.calcRow}>
+            <span className={styles.calcLabel}>Entry price</span>
+            <span className={styles.calcValue}>{currentPrice.toFixed(6)} ETH</span>
+          </div>
+          <div className={styles.calcRow}>
+            <span className={styles.calcLabel}>
+              Liq. price
+              <Info size={14} className={styles.infoIcon} />
+            </span>
+            <span className={`${styles.calcValue} ${styles.warning}`}>
+              {preview.liqPrice.toFixed(6)} ETH
+            </span>
+          </div>
+          <div className={styles.calcRow}>
+            <span className={styles.calcLabel}>Initial health</span>
+            <span className={`${styles.calcValue} ${healthColor(preview.health)}`}>
+              {preview.health}%
+            </span>
+          </div>
+          <div className={styles.calcRow}>
+            <span className={styles.calcLabel}>Entry fee (1%)</span>
+            <span className={styles.calcValue}>{preview.originationFee.toFixed(5)} ETH</span>
+          </div>
         </div>
-        <div className={styles.calcRow}>
-          <span className={styles.calcLabel}>Entry Price</span>
-          <span className={styles.calcValue}>${calculations.entryPrice}</span>
-        </div>
-        <div className={styles.calcRow}>
-          <span className={styles.calcLabel}>
-            Liquidation Price
-            <Info size={14} className={styles.infoIcon} />
-          </span>
-          <span className={`${styles.calcValue} ${styles.warning}`}>
-            ${calculations.liquidationPrice}
-          </span>
-        </div>
-        <div className={styles.calcRow}>
-          <span className={styles.calcLabel}>Health Factor</span>
-          <span className={styles.calcValue}>{calculations.healthFactor}%</span>
-        </div>
-        <div className={styles.calcRow}>
-          <span className={styles.calcLabel}>Estimated Fee</span>
-          <span className={styles.calcValue}>${calculations.estimatedFee}</span>
-        </div>
-      </div>
+      )}
 
       {/* Submit Button */}
       <button
-        className={`${styles.submitBtn} ${positionType === 'long' ? styles.submitLong : styles.submitShort}`}
+        className={`${styles.submitBtn} ${styles.submitLong}`}
         onClick={handleSubmit}
         disabled={isButtonDisabled}
       >
         {isConfirming ? (
           'Processing...'
-        ) : positionType === 'long' ? (
+        ) : !leverageUnlocked ? (
+          <>
+            <Lock size={18} />
+            Leverage locked
+          </>
+        ) : (
           <>
             <TrendingUp size={20} />
             Open Long {leverage}x
           </>
-        ) : (
-          <>
-            <TrendingDown size={20} />
-            Open Short {leverage}x
-          </>
         )}
       </button>
 
+      {/* Warnings */}
       {!isConnected && (
         <div className={styles.warning}>
           <Info size={16} />
-          <span>Please connect your wallet to start trading</span>
+          <span>Connect your wallet to start trading</span>
         </div>
       )}
 
-      {/* Risk Warning */}
       {isConnected && (
         <div className={styles.warning}>
-          <Info size={16} />
+          <AlertTriangle size={16} />
           <span>
-            Trading with leverage involves significant risk. You may lose more than your initial collateral.
+            LONG-only positions on the PEPS bonding curve.
+            Liquidation at health ≤ 105%. Close fee: 1% of profit.
           </span>
         </div>
       )}

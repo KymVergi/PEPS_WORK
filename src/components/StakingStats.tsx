@@ -1,43 +1,44 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Lock, TrendingUp, Users, Coins } from 'lucide-react'
+import { Coins, TrendingUp, Activity, Database } from 'lucide-react'
+import { useAccount } from 'wagmi'
+import { useStaking } from '@/hooks/useStaking'
+import { useTrading } from '@/hooks/useTrading'
 import styles from './StakingStats.module.css'
 
 export default function StakingStats() {
-  // Mock data
-  const stats = {
-    totalStaked: 42500000,
-    totalStakers: 3847,
-    averageApy: 25.5,
-    yourStaked: 8500.00,
-    yourRewards: 156.42,
-    nextReward: '2d 14h',
-  }
+  const { isConnected } = useAccount()
+  const { stakedPERP, pendingETH, claimableETH, totalStakedProtocol, claimRewards, isConfirming } = useStaking()
+  const { curveLevel, currentPrice } = useTrading()
+
+  const totalRewards = pendingETH + claimableETH
 
   const statsData = [
     {
-      icon: Lock,
-      label: 'Total Value Locked',
-      value: `$${(stats.totalStaked / 1000000).toFixed(1)}M`,
+      icon: Database,
+      label: 'Total PEPS Staked',
+      value: totalStakedProtocol > 0
+        ? `${(totalStakedProtocol / 1000).toFixed(1)}K PEPS`
+        : '—',
       color: '#00f0ff',
     },
     {
-      icon: TrendingUp,
-      label: 'Average APY',
-      value: `${stats.averageApy}%`,
+      icon: Activity,
+      label: 'Curve Level',
+      value: curveLevel > 0 ? `${curveLevel.toFixed(4)} ETH` : '—',
       color: '#00ff88',
     },
     {
-      icon: Users,
-      label: 'Total Stakers',
-      value: stats.totalStakers.toLocaleString(),
+      icon: TrendingUp,
+      label: 'PEPS Price',
+      value: currentPrice > 0 ? `${currentPrice.toFixed(6)} ETH` : '—',
       color: '#c026d3',
     },
     {
       icon: Coins,
       label: 'Your Rewards',
-      value: `${stats.yourRewards.toFixed(2)} PEPS`,
+      value: isConnected ? `${totalRewards.toFixed(6)} ETH` : '—',
       color: '#ff9800',
     },
   ]
@@ -56,7 +57,7 @@ export default function StakingStats() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
             >
-              <div 
+              <div
                 className={styles.iconWrapper}
                 style={{ background: `${stat.color}22` }}
               >
@@ -71,73 +72,78 @@ export default function StakingStats() {
         })}
       </div>
 
-      {/* Your Staking Info */}
-      <motion.div
-        className={styles.userCard}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-      >
-        <div className={styles.userHeader}>
-          <h3 className={styles.userTitle}>Your Staking</h3>
-        </div>
-        
-        <div className={styles.userStats}>
-          <div className={styles.userStatItem}>
-            <span className={styles.userStatLabel}>Staked Amount</span>
-            <span className={styles.userStatValue}>
-              {stats.yourStaked.toLocaleString()} PEPS
-            </span>
+      {/* User staking summary */}
+      {isConnected && (
+        <motion.div
+          className={styles.userCard}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <div className={styles.userHeader}>
+            <h3 className={styles.userTitle}>Your Staking</h3>
           </div>
-          <div className={styles.userStatItem}>
-            <span className={styles.userStatLabel}>Earned Rewards</span>
-            <span className={`${styles.userStatValue} ${styles.rewards}`}>
-              {stats.yourRewards.toFixed(2)} PEPS
-            </span>
-          </div>
-          <div className={styles.userStatItem}>
-            <span className={styles.userStatLabel}>Next Reward In</span>
-            <span className={styles.userStatValue}>
-              {stats.nextReward}
-            </span>
-          </div>
-        </div>
 
-        <button className={styles.claimBtn}>
-          <Coins size={18} />
-          Claim Rewards
-        </button>
-      </motion.div>
+          <div className={styles.userStats}>
+            <div className={styles.userStatItem}>
+              <span className={styles.userStatLabel}>PEPS Stakeado</span>
+              <span className={styles.userStatValue}>
+                {stakedPERP.toLocaleString(undefined, { maximumFractionDigits: 2 })} PEPS
+              </span>
+            </div>
+            <div className={styles.userStatItem}>
+              <span className={styles.userStatLabel}>Recompensas pendientes</span>
+              <span className={`${styles.userStatValue} ${styles.rewards}`}>
+                {pendingETH.toFixed(6)} ETH
+              </span>
+            </div>
+            <div className={styles.userStatItem}>
+              <span className={styles.userStatLabel}>ETH reclamable</span>
+              <span className={`${styles.userStatValue} ${styles.rewards}`}>
+                {claimableETH.toFixed(6)} ETH
+              </span>
+            </div>
+          </div>
 
-      {/* APY Tiers Info */}
+          {totalRewards > 0 && (
+            <button
+              className={styles.claimBtn}
+              onClick={claimRewards}
+              disabled={isConfirming}
+            >
+              <Coins size={18} />
+              {isConfirming ? 'Procesando...' : `Reclamar ${totalRewards.toFixed(6)} ETH`}
+            </button>
+          )}
+        </motion.div>
+      )}
+
+      {/* Fee info */}
       <motion.div
-        className={styles.apyCard}
+        className={styles.feeCard}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <h3 className={styles.apyTitle}>APY by Lock Period</h3>
-        <div className={styles.apyList}>
+        <h3 className={styles.feeTitle}>Distribución de Comisiones</h3>
+        <div className={styles.feeList}>
           {[
-            { period: '30 days', apy: '12.5%' },
-            { period: '90 days', apy: '18.0%' },
-            { period: '180 days', apy: '25.0%' },
-            { period: '365 days', apy: '35.0%' },
-          ].map((tier, index) => (
-            <div key={tier.period} className={styles.apyItem}>
-              <span className={styles.apyPeriod}>{tier.period}</span>
-              <div className={styles.apyBar}>
-                <motion.div
-                  className={styles.apyFill}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${parseFloat(tier.apy) * 2}%` }}
-                  transition={{ delay: 0.5 + index * 0.1, duration: 0.6 }}
-                />
-              </div>
-              <span className={styles.apyValue}>{tier.apy}</span>
+            { label: 'Fee de apertura', value: '1% del borrow', color: '#00f0ff' },
+            { label: 'Fee de cierre', value: '1% del profit', color: '#00ff88' },
+            { label: 'Fee LP (spot)', value: '1% por swap', color: '#c026d3' },
+          ].map((fee) => (
+            <div key={fee.label} className={styles.feeItem}>
+              <span className={styles.feeName}>{fee.label}</span>
+              <span className={styles.feeValue} style={{ color: fee.color }}>
+                {fee.value}
+              </span>
             </div>
           ))}
         </div>
+        <p className={styles.feeNote}>
+          Los stakers reciben los fees de apertura y cierre en ETH, en proporción a su stake.
+          No hay período de lock ni penalización por salida.
+        </p>
       </motion.div>
     </div>
   )

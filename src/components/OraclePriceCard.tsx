@@ -1,20 +1,32 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { TrendingUp, Activity, Clock } from 'lucide-react'
+import { TrendingUp, Activity, Zap, AlertCircle } from 'lucide-react'
+import { useTrading } from '@/hooks/useTrading'
 import styles from './OraclePriceCard.module.css'
 
+// Bonding curve: P(E) = (V + E)² / K
+// V = 10 ETH, K = 10M
+const VIRTUAL_ETH = 10
+const K = 10_000_000
+const MAX_CURVE_LEVEL = 1500
+
+function calcPrice(curveLevel: number): number {
+  return ((VIRTUAL_ETH + curveLevel) ** 2) / K
+}
+
 export default function OraclePriceCard() {
-  // Mock data
-  const oracleData = {
-    currentPrice: 1247.82,
-    change24h: 72.45,
-    changePercent: 5.8,
-    high24h: 1265.30,
-    low24h: 1175.37,
-    lastUpdate: new Date().toLocaleTimeString(),
-    volume24h: 28900000,
-  }
+  const { currentPrice, twapPrice, curveLevel, borrowCapacity, leverageUnlocked } = useTrading()
+
+  // Progress along the curve (0 → 1500 ETH total)
+  const curveProgress = Math.min((curveLevel / MAX_CURVE_LEVEL) * 100, 100)
+
+  // Approximate price at 50% curve level for reference
+  const priceAt50pct = calcPrice(MAX_CURVE_LEVEL * 0.5)
+
+  const twapDiff = currentPrice > 0 && twapPrice > 0
+    ? ((currentPrice - twapPrice) / twapPrice) * 100
+    : 0
 
   return (
     <motion.div
@@ -27,46 +39,86 @@ export default function OraclePriceCard() {
         <div className={styles.titleSection}>
           <Activity className={styles.icon} size={32} />
           <div>
-            <h1 className={styles.title}>Peptide Oracle Index</h1>
-            <p className={styles.subtitle}>Real-time biomarker aggregated pricing</p>
+            <h1 className={styles.title}>PEPS Bonding Curve</h1>
+            <p className={styles.subtitle}>
+              P(E) = (10 + E)² / 10,000,000 · precio en ETH por PERP
+            </p>
           </div>
         </div>
-        <div className={styles.updateTime}>
-          <Clock size={16} />
-          <span>Last update: {oracleData.lastUpdate}</span>
+        <div className={`${styles.statusChip} ${leverageUnlocked ? styles.unlocked : styles.locked}`}>
+          {leverageUnlocked ? (
+            <><Zap size={14} /> Leverage activo</>
+          ) : (
+            <><AlertCircle size={14} /> Leverage bloqueado</>
+          )}
         </div>
       </div>
 
+      {/* Current price */}
       <div className={styles.priceSection}>
         <div className={styles.mainPrice}>
-          <span className={styles.currency}>$</span>
-          <span className={styles.price}>{oracleData.currentPrice.toFixed(2)}</span>
+          <span className={styles.price}>
+            {currentPrice > 0 ? currentPrice.toFixed(8) : '—'}
+          </span>
+          <span className={styles.currency}>ETH / PERP</span>
         </div>
-        <div className={`${styles.change} ${oracleData.changePercent >= 0 ? styles.positive : styles.negative}`}>
-          <TrendingUp size={20} />
-          <span className={styles.changeValue}>
-            {oracleData.changePercent >= 0 ? '+' : ''}{oracleData.changePercent}%
+        {twapPrice > 0 && (
+          <div className={`${styles.change} ${twapDiff >= 0 ? styles.positive : styles.negative}`}>
+            <TrendingUp size={16} />
+            <span>
+              TWAP: {twapPrice.toFixed(8)} ETH
+              ({twapDiff >= 0 ? '+' : ''}{twapDiff.toFixed(2)}%)
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Curve progress bar */}
+      <div className={styles.curveSection}>
+        <div className={styles.curveHeader}>
+          <span className={styles.curveLabel}>Nivel de Curva</span>
+          <span className={styles.curveValue}>
+            {curveLevel.toFixed(4)} ETH / {MAX_CURVE_LEVEL} ETH
           </span>
-          <span className={styles.changeAmount}>
-            ({oracleData.changePercent >= 0 ? '+' : ''}${oracleData.change24h.toFixed(2)})
-          </span>
+        </div>
+        <div className={styles.progressBar}>
+          <motion.div
+            className={styles.progressFill}
+            initial={{ width: 0 }}
+            animate={{ width: `${curveProgress}%` }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+          />
+          {/* Leverage unlock marker at ~0.33% (5/1500) */}
+          <div
+            className={styles.leverageMarker}
+            style={{ left: `${(5 / MAX_CURVE_LEVEL) * 100}%` }}
+            title="Leverage se desbloquea aquí (5 ETH)"
+          />
+        </div>
+        <div className={styles.progressLabels}>
+          <span>0 ETH</span>
+          <span>▲ Leverage unlock (5 ETH)</span>
+          <span>{MAX_CURVE_LEVEL} ETH</span>
         </div>
       </div>
 
+      {/* Stats */}
       <div className={styles.stats}>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>24h High</span>
-          <span className={styles.statValue}>${oracleData.high24h.toFixed(2)}</span>
+          <span className={styles.statLabel}>Nivel actual</span>
+          <span className={styles.statValue}>{curveLevel.toFixed(4)} ETH</span>
         </div>
         <div className={styles.statDivider} />
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>24h Low</span>
-          <span className={styles.statValue}>${oracleData.low24h.toFixed(2)}</span>
+          <span className={styles.statLabel}>Cap. préstamo</span>
+          <span className={styles.statValue}>
+            {borrowCapacity > 0 ? `${borrowCapacity.toFixed(4)} ETH` : '—'}
+          </span>
         </div>
         <div className={styles.statDivider} />
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>24h Volume</span>
-          <span className={styles.statValue}>${(oracleData.volume24h / 1000000).toFixed(1)}M</span>
+          <span className={styles.statLabel}>Precio @50%</span>
+          <span className={styles.statValue}>{priceAt50pct.toFixed(6)} ETH</span>
         </div>
       </div>
 

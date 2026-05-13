@@ -1,134 +1,173 @@
 'use client'
 
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
-import { parseUnits } from 'viem'
-import { STAKING_CONTRACT_ABI, PEPS_TOKEN_ABI } from '@/lib/contracts/abis'
+import { parseEther, formatEther } from 'viem'
+import { UNIPERP_HOOK_ABI, PEPS_TOKEN_ABI } from '@/lib/contracts/abis'
 import { getContractAddress } from '@/lib/contracts/addresses'
 import toast from 'react-hot-toast'
 
 export function useStaking() {
   const { address, chain } = useAccount()
   const { writeContract, data: hash } = useWriteContract()
-  
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = 
+
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({ hash })
 
-  // Get stake info
-  const { data: stakeInfo, refetch: refetchStakeInfo } = useReadContract({
-    address: chain?.id ? getContractAddress(chain.id as any, 'STAKING_CONTRACT') : undefined,
-    abi: STAKING_CONTRACT_ABI,
-    functionName: 'getStakeInfo',
+  const hookAddress = chain?.id
+    ? getContractAddress(chain.id as any, 'UNIPERP_HOOK')
+    : undefined
+
+  // User's staked amount and reward debt
+  const { data: stakesRaw, refetch: refetchStakes } = useReadContract({
+    address: hookAddress,
+    abi: UNIPERP_HOOK_ABI,
+    functionName: 'stakes',
     args: address ? [address] : undefined,
-    query: {
-      enabled: !!address && !!chain,
-    }
+    query: { enabled: !!address && !!hookAddress, refetchInterval: 15_000 },
   })
 
-  // Stake tokens
-  const stake = async ({
-    amount,
-    lockPeriodDays,
-  }: {
-    amount: string
-    lockPeriodDays: number
-  }) => {
+  // Pending ETH rewards
+  const { data: pendingRaw, refetch: refetchPending } = useReadContract({
+    address: hookAddress,
+    abi: UNIPERP_HOOK_ABI,
+    functionName: 'pendingRewards',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && !!hookAddress, refetchInterval: 10_000 },
+  })
+
+  // Claimable ETH (from positions closed / liquidated)
+  const { data: claimableRaw, refetch: refetchClaimable } = useReadContract({
+    address: hookAddress,
+    abi: UNIPERP_HOOK_ABI,
+    functionName: 'claimableETH',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && !!hookAddress, refetchInterval: 10_000 },
+  })
+
+  // Total staked across the protocol
+  const { data: totalStakedRaw } = useReadContract({
+    address: hookAddress,
+    abi: UNIPERP_HOOK_ABI,
+    functionName: 'totalStaked',
+    query: { enabled: !!hookAddress, refetchInterval: 30_000 },
+  })
+
+  const stakedPERP = stakesRaw
+    ? parseFloat(formatEther((stakesRaw as readonly [bigint, bigint])[0]))
+    : 0
+  const pendingETH = pendingRaw ? parseFloat(formatEther(pendingRaw as bigint)) : 0
+  const claimableETH = claimableRaw ? parseFloat(formatEther(claimableRaw as bigint)) : 0
+  const totalStakedProtocol = totalStakedRaw ? parseFloat(formatEther(totalStakedRaw as bigint)) : 0
+
+  const refetchAll = () => {
+    refetchStakes()
+    refetchPending()
+    refetchClaimable()
+  }
+
+  // Stake PEPS (requires approval first)
+  const stake = async (amount: string) => {
     if (!address || !chain) {
-      toast.error('Please connect your wallet')
+      toast.error('Connect your wallet first')
       return
     }
 
     try {
-      const amountBigInt = parseUnits(amount, 18)
-      const lockPeriod = BigInt(lockPeriodDays * 24 * 60 * 60) // Convert days to seconds
+      const amountWei = parseEther(amount)
+      const hookAddr = getContractAddress(chain.id as any, 'UNIPERP_HOOK')
+      const pepsAddr = getContractAddress(chain.id as any, 'PEPS_TOKEN')
 
-      // Approve PEPS first
-      toast.loading('Approving PEPS...', { id: 'approve' })
-      
+      // Approve PEPS spend on the hook
+      toast.loading('Approving PEPS...', { id: 'stake' })
       await writeContract({
-        address: getContractAddress(chain.id as any, 'PEPS_TOKEN'),
+        address: pepsAddr,
         abi: PEPS_TOKEN_ABI,
         functionName: 'approve',
-        args: [getContractAddress(chain.id as any, 'STAKING_CONTRACT'), amountBigInt],
+        args: [hookAddr, amountWei],
       })
 
-      toast.success('PEPS approved!', { id: 'approve' })
-
-      // Stake
       toast.loading('Staking PEPS...', { id: 'stake' })
-      
       await writeContract({
-        address: getContractAddress(chain.id as any, 'STAKING_CONTRACT'),
-        abi: STAKING_CONTRACT_ABI,
+        address: hookAddr,
+        abi: UNIPERP_HOOK_ABI,
         functionName: 'stake',
-        args: [amountBigInt, lockPeriod],
+        args: [amountWei],
       })
 
-      toast.success(`Successfully staked ${amount} PEPS!`, { id: 'stake' })
-      refetchStakeInfo()
+      toast.success(`${amount} PEPS staked!`, { id: 'stake' })
+      refetchAll()
     } catch (error: any) {
       console.error('Error staking:', error)
-      toast.error(error.message || 'Failed to stake', { id: 'stake' })
+      const msg = error?.shortMessage || error?.message || 'Failed to stake'
+      toast.error(msg, { id: 'stake' })
     }
   }
 
-  // Unstake tokens
+  // Unstake PEPS
   const unstake = async (amount: string) => {
     if (!address || !chain) {
-      toast.error('Please connect your wallet')
+      toast.error('Connect your wallet first')
       return
     }
 
     try {
-      const amountBigInt = parseUnits(amount, 18)
+      const amountWei = parseEther(amount)
 
       toast.loading('Unstaking PEPS...', { id: 'unstake' })
-      
       await writeContract({
-        address: getContractAddress(chain.id as any, 'STAKING_CONTRACT'),
-        abi: STAKING_CONTRACT_ABI,
+        address: getContractAddress(chain.id as any, 'UNIPERP_HOOK'),
+        abi: UNIPERP_HOOK_ABI,
         functionName: 'unstake',
-        args: [amountBigInt],
+        args: [amountWei],
       })
 
-      toast.success(`Successfully unstaked ${amount} PEPS!`, { id: 'unstake' })
-      refetchStakeInfo()
+      toast.success(`${amount} PEPS unstaked!`, { id: 'unstake' })
+      refetchAll()
     } catch (error: any) {
       console.error('Error unstaking:', error)
-      toast.error(error.message || 'Failed to unstake', { id: 'unstake' })
+      const msg = error?.shortMessage || error?.message || 'Failed to unstake'
+      toast.error(msg, { id: 'unstake' })
     }
   }
 
-  // Claim rewards
+  // Claim ETH rewards
   const claimRewards = async () => {
     if (!address || !chain) {
-      toast.error('Please connect your wallet')
+      toast.error('Connect your wallet first')
+      return
+    }
+    if (pendingETH + claimableETH === 0) {
+      toast.error('No rewards available')
       return
     }
 
     try {
-      toast.loading('Claiming rewards...', { id: 'claim' })
-      
+      toast.loading('Claiming ETH rewards...', { id: 'claim' })
       await writeContract({
-        address: getContractAddress(chain.id as any, 'STAKING_CONTRACT'),
-        abi: STAKING_CONTRACT_ABI,
+        address: getContractAddress(chain.id as any, 'UNIPERP_HOOK'),
+        abi: UNIPERP_HOOK_ABI,
         functionName: 'claimRewards',
       })
 
-      toast.success('Rewards claimed!', { id: 'claim' })
-      refetchStakeInfo()
+      toast.success('ETH rewards claimed!', { id: 'claim' })
+      refetchAll()
     } catch (error: any) {
       console.error('Error claiming rewards:', error)
-      toast.error(error.message || 'Failed to claim rewards', { id: 'claim' })
+      const msg = error?.shortMessage || error?.message || 'Failed to claim rewards'
+      toast.error(msg, { id: 'claim' })
     }
   }
 
   return {
-    stakeInfo: stakeInfo as { amount: bigint; rewards: bigint; lockUntil: bigint } | undefined,
+    stakedPERP,
+    pendingETH,
+    claimableETH,
+    totalStakedProtocol,
     stake,
     unstake,
     claimRewards,
     isConfirming,
     isConfirmed,
-    refetchStakeInfo,
+    refetchAll,
   }
 }

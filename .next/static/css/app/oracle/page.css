@@ -1,0 +1,1100 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/ConnectWallet.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************/
+.ConnectWallet_wrapper__AFwPB {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.ConnectWallet_connectBtn__Np3yf {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 10px 18px;
+  background: var(--gradient-primary);
+  color: #000;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+
+.ConnectWallet_connectBtn__Np3yf:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-glow);
+}
+
+.ConnectWallet_connectBtn__Np3yf:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Connected state */
+.ConnectWallet_connected__6RnzO {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  border-radius: var(--radius-md);
+}
+
+.ConnectWallet_info__h1wuw {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ConnectWallet_dot__kIBOe {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-neon-green);
+  box-shadow: 0 0 6px var(--color-neon-green);
+  flex-shrink: 0;
+}
+
+.ConnectWallet_address__lSu5Q {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.ConnectWallet_network__7bD3c {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-tertiary);
+  padding: 2px 6px;
+  background: var(--color-bg-tertiary);
+  border-radius: 4px;
+}
+
+.ConnectWallet_disconnectBtn__zJxfI {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  color: var(--color-text-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.ConnectWallet_disconnectBtn__zJxfI:hover {
+  color: #ff4444;
+  border-color: #ff4444;
+  background: rgba(255, 68, 68, 0.1);
+}
+
+.ConnectWallet_error__zTPAR {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #ff6666;
+}
+
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/TopBar.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.TopBar_topbar__LJmSM {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.TopBar_content__6eXNX {
+  max-width: 100%;
+  padding: 0 var(--spacing-lg);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================
+   LOGO
+   ========================================== */
+
+.TopBar_logo__T4968 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  transition: all var(--transition-base);
+}
+
+.TopBar_logo__T4968:hover {
+  transform: scale(1.05);
+}
+
+.TopBar_logoSymbol__fjTnI {
+  color: var(--color-neon-blue);
+  font-size: 1.8rem;
+}
+
+.TopBar_logoText__F_oyg {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================
+   STATS
+   ========================================== */
+
+.TopBar_stats__lHbGN {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex: 1 1;
+  justify-content: center;
+}
+
+.TopBar_statItem__CvEU0 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.TopBar_statLabel__2jrC0 {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.TopBar_statValue__gCNn4 {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.TopBar_statValue__gCNn4.TopBar_positive__QgC_4 {
+  color: var(--color-text-success);
+}
+
+.TopBar_statDivider__LdY9I {
+  width: 1px;
+  height: 32px;
+  background: var(--color-border);
+}
+
+/* ==========================================
+   WALLET
+   ========================================== */
+
+.TopBar_walletSection__Imoys {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.TopBar_walletButton__5ROFs {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.TopBar_walletButton__5ROFs:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-tertiary);
+}
+
+.TopBar_connectButton__6p9R8 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-glow);
+}
+
+.TopBar_connectButton__6p9R8:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow), var(--shadow-md);
+}
+
+/* ==========================================
+   MOBILE MENU
+   ========================================== */
+
+.TopBar_menuToggle__tKaPd {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+}
+
+.TopBar_mobileMenu__57J8V {
+  display: none;
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  background: rgba(17, 17, 17, 0.98);
+}
+
+.TopBar_mobileStats__nAfry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.TopBar_mobileStatItem__73zsu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.TopBar_mobileWallet__Tvv9u {
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .TopBar_content__6eXNX {
+    padding: 0 var(--spacing-md);
+  }
+
+  .TopBar_stats__lHbGN {
+    display: none;
+  }
+
+  .TopBar_menuToggle__tKaPd {
+    display: block;
+  }
+
+  .TopBar_mobileMenu__57J8V {
+    display: block;
+  }
+
+  .TopBar_walletSection__Imoys {
+    flex: 1 1;
+    justify-content: flex-end;
+  }
+
+  .TopBar_connectButton__6p9R8,
+  .TopBar_walletButton__5ROFs {
+    font-size: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/Sidebar.module.css ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
+.Sidebar_sidebar__v6daX {
+  position: fixed;
+  left: 0;
+  top: 72px;
+  bottom: 0;
+  width: 240px;
+  background: var(--color-bg-secondary);
+  border-right: 1px solid var(--color-border);
+  padding: var(--spacing-xl) 0;
+  z-index: 100;
+}
+
+.Sidebar_nav__KAd3g {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: 0 var(--spacing-md);
+}
+
+.Sidebar_navItem__5OSJs {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.Sidebar_navItem__5OSJs:hover {
+  color: var(--color-text-primary);
+  background: var(--color-bg-tertiary);
+}
+
+.Sidebar_navItem__5OSJs.Sidebar_active__jjcnH {
+  color: var(--color-text-primary);
+  background: var(--color-bg-elevated);
+  border-left: 3px solid var(--color-neon-blue);
+}
+
+.Sidebar_navItem__5OSJs.Sidebar_active__jjcnH::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--gradient-primary);
+  border-radius: 0 2px 2px 0;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .Sidebar_sidebar__v6daX {
+    width: 72px;
+    padding: var(--spacing-lg) 0;
+  }
+
+  .Sidebar_nav__KAd3g {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .Sidebar_navItem__5OSJs {
+    justify-content: center;
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+
+  .Sidebar_navItem__5OSJs span {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .Sidebar_sidebar__v6daX {
+    display: none;
+  }
+}
+
+/*!*************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/OraclePriceCard.module.css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************/
+.OraclePriceCard_card__vq0EF {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  padding: var(--spacing-2xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.OraclePriceCard_header__qivmt {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.OraclePriceCard_titleSection__z6qeN {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.OraclePriceCard_icon__W_LnB {
+  color: var(--color-neon-blue);
+  animation: OraclePriceCard_pulse-glow__VdhwY 3s ease-in-out infinite;
+}
+
+.OraclePriceCard_title__5mAwX {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.OraclePriceCard_subtitle__M4o6k {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+}
+
+.OraclePriceCard_updateTime__lEaZz {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+}
+
+.OraclePriceCard_statusChip__cOwY6 {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.OraclePriceCard_unlocked__kfDX6 {
+  background: rgba(0, 255, 136, 0.12);
+  color: var(--color-neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.OraclePriceCard_locked__2dxXk {
+  background: rgba(255, 200, 0, 0.1);
+  color: #ffc800;
+  border: 1px solid rgba(255, 200, 0, 0.3);
+}
+
+/* ==========================================
+   PRICE SECTION
+   ========================================== */
+
+.OraclePriceCard_priceSection__QliVa {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.OraclePriceCard_mainPrice__nn6wu {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-sm);
+}
+
+.OraclePriceCard_currency__tHe1d {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+  align-self: flex-end;
+  padding-bottom: 0.5rem;
+}
+
+.OraclePriceCard_price__tYqpo {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(0, 240, 255, 0.3);
+}
+
+.OraclePriceCard_change__LuX0x {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.OraclePriceCard_change__LuX0x.OraclePriceCard_positive__eedga {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--color-neon-green);
+  border: 1px solid rgba(0, 255, 136, 0.3);
+}
+
+.OraclePriceCard_change__LuX0x.OraclePriceCard_negative__Nns_C {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff4444;
+  border: 1px solid rgba(255, 68, 68, 0.3);
+}
+
+.OraclePriceCard_changeValue__H1jGa {
+  font-size: 1.5rem;
+}
+
+.OraclePriceCard_changeAmount__fRa54 {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* ==========================================
+   CURVE PROGRESS
+   ========================================== */
+
+.OraclePriceCard_curveSection__d80I_ {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.OraclePriceCard_curveHeader__l2TWg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.OraclePriceCard_curveLabel__p7lT_ {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+.OraclePriceCard_curveValue__D2Hl8 {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-neon-blue);
+}
+
+.OraclePriceCard_progressBar__pOGjm {
+  position: relative;
+  height: 10px;
+  background: var(--color-bg-elevated);
+  border-radius: 5px;
+  overflow: visible;
+  margin-bottom: var(--spacing-sm);
+}
+
+.OraclePriceCard_progressFill__hqIRN {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 5px;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.5);
+}
+
+.OraclePriceCard_leverageMarker__fwB6J {
+  position: absolute;
+  top: -4px;
+  width: 3px;
+  height: 18px;
+  background: #ffc800;
+  border-radius: 2px;
+  box-shadow: 0 0 6px rgba(255, 200, 0, 0.6);
+}
+
+.OraclePriceCard_progressLabels__IKwz8 {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-text-tertiary);
+}
+
+/* ==========================================
+   STATS
+   ========================================== */
+
+.OraclePriceCard_stats__3vLrK {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-xl);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.OraclePriceCard_statItem__lmfCN {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  flex: 1 1;
+}
+
+.OraclePriceCard_statLabel__vXKco {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.OraclePriceCard_statValue__hlNdm {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.OraclePriceCard_statDivider__kafku {
+  width: 1px;
+  height: 40px;
+  background: var(--color-border);
+}
+
+/* ==========================================
+   EFFECTS
+   ========================================== */
+
+.OraclePriceCard_pulseEffect__5yLAl {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.15) 0%, transparent 70%);
+  animation: OraclePriceCard_pulse-scale__JMXSQ 4s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes OraclePriceCard_pulse-scale__JMXSQ {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.1;
+  }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .OraclePriceCard_card__vq0EF {
+    padding: var(--spacing-xl);
+  }
+
+  .OraclePriceCard_header__qivmt {
+    flex-direction: column;
+  }
+
+  .OraclePriceCard_titleSection__z6qeN {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .OraclePriceCard_title__5mAwX {
+    font-size: 1.5rem;
+  }
+
+  .OraclePriceCard_priceSection__QliVa {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-lg);
+  }
+
+  .OraclePriceCard_price__tYqpo {
+    font-size: 3rem;
+  }
+
+  .OraclePriceCard_stats__3vLrK {
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+
+  .OraclePriceCard_statItem__lmfCN {
+    width: 100%;
+  }
+
+  .OraclePriceCard_statDivider__kafku {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/components/TradingChart.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.TradingChart_container__4GN_m {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.TradingChart_header__hP0xg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.TradingChart_headerLeft__U1En_ {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.TradingChart_title__736Cy {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.TradingChart_priceInfo__iOmwA {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.TradingChart_price__a0xkF {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.TradingChart_change__ThgRp {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-success);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: rgba(0, 255, 136, 0.1);
+  border-radius: var(--radius-sm);
+}
+
+.TradingChart_timeframes__lNQFX {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.TradingChart_timeframeBtn__DvKn0 {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.TradingChart_timeframeBtn__DvKn0:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-hover);
+}
+
+.TradingChart_timeframeBtn__DvKn0.TradingChart_active__u0pAa {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border-color: transparent;
+}
+
+.TradingChart_chartContainer__H0Vqv {
+  flex: 1 1;
+  min-height: 400px;
+}
+
+@media (max-width: 768px) {
+  .TradingChart_header__hP0xg {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .TradingChart_timeframes__lNQFX {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .TradingChart_timeframeBtn__DvKn0 {
+    flex: 1 1;
+  }
+
+  .TradingChart_chartContainer__H0Vqv {
+    min-height: 300px;
+  }
+}
+
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[5].use[3]!./src/app/oracle/page.module.css ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+.page_page__E5ikl {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.page_main__X4z7D {
+  margin-left: 240px;
+  padding-top: 72px;
+  min-height: 100vh;
+}
+
+.page_container__joC2B {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+/* ==========================================
+   SECTIONS
+   ========================================== */
+
+.page_heroSection__32XQ5 {
+  width: 100%;
+}
+
+.page_breakdownSection__PZWgq {
+  width: 100%;
+}
+
+.page_chartSection__jkYMa {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+.page_chartHeader__z_Wgj {
+  text-align: center;
+}
+
+.page_chartTitle__TqXrb {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.page_chartSubtitle__5dBqT {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+}
+
+.page_chartContainer__prxZH {
+  height: 600px;
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+/* ==========================================
+   BREAKDOWN / MECHANICS SECTION
+   ========================================== */
+
+.page_breakdownHeader__Rr9Xf {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.page_breakdownTitle__008yf {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.page_breakdownSubtitle__1Z6dR {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.page_mechanicsGrid___R2R0 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-gap: var(--spacing-lg);
+  gap: var(--spacing-lg);
+}
+
+.page_mechCard__CkDYv {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  transition: all var(--transition-base);
+}
+
+.page_mechCard__CkDYv:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-3px);
+}
+
+.page_mechIcon__aUTRK {
+  font-size: 2rem;
+}
+
+.page_mechTitle__RihI2 {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-tertiary);
+}
+
+.page_mechValue__alOJX {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-neon-blue);
+  word-break: break-all;
+}
+
+.page_mechDesc__Zpxn9 {
+  font-size: 0.82rem;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* ==========================================
+   INFO SECTION
+   ========================================== */
+
+.page_infoSection___R7M5 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: var(--spacing-lg);
+  gap: var(--spacing-lg);
+}
+
+.page_infoCard__dr_2y {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all var(--transition-base);
+}
+
+.page_infoCard__dr_2y:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.page_infoTitle__5vm13 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.page_infoText__XoiMV {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.page_sourcesList__5bcDR {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.page_sourceItem__4PI_a {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-neon-blue);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .page_main__X4z7D {
+    margin-left: 72px;
+  }
+
+  .page_chartContainer__prxZH {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page_main__X4z7D {
+    margin-left: 0;
+    padding-top: 64px;
+  }
+
+  .page_container__joC2B {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-xl);
+  }
+
+  .page_chartContainer__prxZH {
+    height: 400px;
+  }
+
+  .page_infoSection___R7M5 {
+    grid-template-columns: 1fr;
+  }
+}
+
