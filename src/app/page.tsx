@@ -49,7 +49,6 @@ export default function HomePage() {
             <Link href="/trade" className={styles.navLink}>Trade</Link>
             <Link href="/oracle" className={styles.navLink}>Oracle</Link>
             <Link href="/stake" className={styles.navLink}>Stake</Link>
-            <a href="#" className={styles.navLink}>Docs</a>
           </div>
 
           <button className="btn btn-primary">
@@ -90,7 +89,7 @@ export default function HomePage() {
                 Enter App
                 <ArrowRight size={20} />
               </Link>
-              <a href="#" className="btn btn-secondary">
+              <a href="/PEPS_Whitepaper.pdf" target="_blank" className="btn btn-secondary">
                 <FileText size={20} />
                 Read Whitepaper
               </a>
@@ -223,7 +222,7 @@ export default function HomePage() {
 
         <div className={`${styles.footerBottom} container`}>
           <p className={styles.footerCopyright}>
-            © 2024 Peptide Perps. All rights reserved.
+            © 2026 Peptide Perps. All rights reserved.
           </p>
         </div>
       </footer>
