@@ -41,15 +41,15 @@ export default function OraclePriceCard() {
           <div>
             <h1 className={styles.title}>PEPS Bonding Curve</h1>
             <p className={styles.subtitle}>
-              P(E) = (10 + E)² / 10,000,000 · precio en ETH por PERP
+              P(E) = (10 + E)² / 10,000,000 · price in ETH per PERP
             </p>
           </div>
         </div>
         <div className={`${styles.statusChip} ${leverageUnlocked ? styles.unlocked : styles.locked}`}>
           {leverageUnlocked ? (
-            <><Zap size={14} /> Leverage activo</>
+            <><Zap size={14} /> Leverage active</>
           ) : (
-            <><AlertCircle size={14} /> Leverage bloqueado</>
+            <><AlertCircle size={14} /> Leverage locked</>
           )}
         </div>
       </div>
@@ -76,7 +76,7 @@ export default function OraclePriceCard() {
       {/* Curve progress bar */}
       <div className={styles.curveSection}>
         <div className={styles.curveHeader}>
-          <span className={styles.curveLabel}>Nivel de Curva</span>
+          <span className={styles.curveLabel}>Curve Level</span>
           <span className={styles.curveValue}>
             {curveLevel.toFixed(4)} ETH / {MAX_CURVE_LEVEL} ETH
           </span>
@@ -92,7 +92,7 @@ export default function OraclePriceCard() {
           <div
             className={styles.leverageMarker}
             style={{ left: `${(5 / MAX_CURVE_LEVEL) * 100}%` }}
-            title="Leverage se desbloquea aquí (5 ETH)"
+            title="Leverage unlocks here (5 ETH)"
           />
         </div>
         <div className={styles.progressLabels}>
@@ -105,19 +105,19 @@ export default function OraclePriceCard() {
       {/* Stats */}
       <div className={styles.stats}>
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Nivel actual</span>
+          <span className={styles.statLabel}>Current level</span>
           <span className={styles.statValue}>{curveLevel.toFixed(4)} ETH</span>
         </div>
         <div className={styles.statDivider} />
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Cap. préstamo</span>
+          <span className={styles.statLabel}>Borrow cap.</span>
           <span className={styles.statValue}>
             {borrowCapacity > 0 ? `${borrowCapacity.toFixed(4)} ETH` : '—'}
           </span>
         </div>
         <div className={styles.statDivider} />
         <div className={styles.statItem}>
-          <span className={styles.statLabel}>Precio @50%</span>
+          <span className={styles.statLabel}>Price @50%</span>
           <span className={styles.statValue}>{priceAt50pct.toFixed(6)} ETH</span>
         </div>
       </div>

@@ -21,7 +21,7 @@ export default function ConnectWallet() {
           <span className={styles.address}>{shortAddress}</span>
           {chain && <span className={styles.network}>{chain.name}</span>}
         </div>
-        <button className={styles.disconnectBtn} onClick={() => disconnect()} title="Desconectar">
+        <button className={styles.disconnectBtn} onClick={() => disconnect()} title="Disconnect">
           <LogOut size={15} />
         </button>
       </div>
@@ -38,12 +38,12 @@ export default function ConnectWallet() {
         disabled={isPending}
       >
         <Wallet size={16} />
-        {isPending ? 'Conectando…' : 'Conectar MetaMask'}
+        {isPending ? 'Connecting…' : 'Connect MetaMask'}
       </button>
       {error && (
         <div className={styles.error}>
           <AlertCircle size={13} />
-          {error.message.includes('rejected') ? 'Solicitud rechazada' : error.message}
+          {error.message.includes('rejected') ? 'Request rejected' : error.message}
         </div>
       )}
     </div>

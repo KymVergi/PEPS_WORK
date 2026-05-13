@@ -86,19 +86,19 @@ export default function StakingStats() {
 
           <div className={styles.userStats}>
             <div className={styles.userStatItem}>
-              <span className={styles.userStatLabel}>PEPS Stakeado</span>
+              <span className={styles.userStatLabel}>PEPS Staked</span>
               <span className={styles.userStatValue}>
                 {stakedPERP.toLocaleString(undefined, { maximumFractionDigits: 2 })} PEPS
               </span>
             </div>
             <div className={styles.userStatItem}>
-              <span className={styles.userStatLabel}>Recompensas pendientes</span>
+              <span className={styles.userStatLabel}>Pending rewards</span>
               <span className={`${styles.userStatValue} ${styles.rewards}`}>
                 {pendingETH.toFixed(6)} ETH
               </span>
             </div>
             <div className={styles.userStatItem}>
-              <span className={styles.userStatLabel}>ETH reclamable</span>
+              <span className={styles.userStatLabel}>Claimable ETH</span>
               <span className={`${styles.userStatValue} ${styles.rewards}`}>
                 {claimableETH.toFixed(6)} ETH
               </span>
@@ -112,7 +112,7 @@ export default function StakingStats() {
               disabled={isConfirming}
             >
               <Coins size={18} />
-              {isConfirming ? 'Procesando...' : `Reclamar ${totalRewards.toFixed(6)} ETH`}
+              {isConfirming ? 'Processing...' : `Claim ${totalRewards.toFixed(6)} ETH`}
             </button>
           )}
         </motion.div>
@@ -125,12 +125,12 @@ export default function StakingStats() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.5 }}
       >
-        <h3 className={styles.feeTitle}>Distribución de Comisiones</h3>
+        <h3 className={styles.feeTitle}>Fee Distribution</h3>
         <div className={styles.feeList}>
           {[
-            { label: 'Fee de apertura', value: '1% del borrow', color: '#00f0ff' },
-            { label: 'Fee de cierre', value: '1% del profit', color: '#00ff88' },
-            { label: 'Fee LP (spot)', value: '1% por swap', color: '#c026d3' },
+            { label: 'Open fee', value: '1% of borrow', color: '#00f0ff' },
+            { label: 'Close fee', value: '1% of profit', color: '#00ff88' },
+            { label: 'LP fee (spot)', value: '1% per swap', color: '#c026d3' },
           ].map((fee) => (
             <div key={fee.label} className={styles.feeItem}>
               <span className={styles.feeName}>{fee.label}</span>
@@ -141,8 +141,8 @@ export default function StakingStats() {
           ))}
         </div>
         <p className={styles.feeNote}>
-          Los stakers reciben los fees de apertura y cierre en ETH, en proporción a su stake.
-          No hay período de lock ni penalización por salida.
+          Stakers receive open and close fees in ETH, proportional to their stake.
+          No lock period or exit penalty.
         </p>
       </motion.div>
     </div>

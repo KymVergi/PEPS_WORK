@@ -19,8 +19,8 @@ export default function StakePage() {
             <div>
               <h1 className={styles.title}>Stake $PEPS</h1>
               <p className={styles.subtitle}>
-                Stakea PEPS y recibe una parte de las comisiones del protocolo en ETH.
-                Sin período de lock. Sin penalizaciones.
+                Stake PEPS and earn a share of protocol fees in ETH.
+                No lock period. No penalties.
               </p>
             </div>
           </section>
@@ -40,38 +40,38 @@ export default function StakePage() {
 
           {/* Benefits Section */}
           <section className={styles.benefitsSection}>
-            <h2 className={styles.benefitsTitle}>¿Por qué stakear $PEPS?</h2>
+            <h2 className={styles.benefitsTitle}>Why stake $PEPS?</h2>
             <div className={styles.benefitsGrid}>
               <div className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>💰</div>
-                <h3 className={styles.benefitTitle}>Comisiones en ETH</h3>
+                <h3 className={styles.benefitTitle}>Fees in ETH</h3>
                 <p className={styles.benefitText}>
-                  Recibe una parte de las fees de apertura (1%) y cierre (1%) de posiciones,
-                  pagadas directamente en ETH.
+                  Earn a share of the open (1%) and close (1%) position fees,
+                  paid directly in ETH.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>🔓</div>
-                <h3 className={styles.benefitTitle}>Sin Lock</h3>
+                <h3 className={styles.benefitTitle}>No Lock</h3>
                 <p className={styles.benefitText}>
-                  No hay período mínimo de lock. Puedes stakear y unstakear en cualquier momento
-                  sin penalizaciones.
+                  No minimum lock period. You can stake and unstake at any time
+                  without penalties.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>📊</div>
-                <h3 className={styles.benefitTitle}>Proporcional al volumen</h3>
+                <h3 className={styles.benefitTitle}>Volume-proportional</h3>
                 <p className={styles.benefitText}>
-                  A mayor volumen de trading en el protocolo, mayores recompensas para los stakers.
-                  Incentivos alineados con el crecimiento del protocolo.
+                  Higher trading volume means higher rewards for stakers.
+                  Incentives aligned with protocol growth.
                 </p>
               </div>
               <div className={styles.benefitCard}>
                 <div className={styles.benefitIcon}>⚡</div>
-                <h3 className={styles.benefitTitle}>Reclamar en cualquier momento</h3>
+                <h3 className={styles.benefitTitle}>Claim any time</h3>
                 <p className={styles.benefitText}>
-                  Las recompensas se acumulan en tiempo real. Reclámalas cuando quieras
-                  directamente en tu wallet como ETH.
+                  Rewards accumulate in real time. Claim them whenever you want,
+                  directly to your wallet as ETH.
                 </p>
               </div>
             </div>
@@ -79,36 +79,36 @@ export default function StakePage() {
 
           {/* FAQ Section */}
           <section className={styles.faqSection}>
-            <h2 className={styles.faqTitle}>Preguntas frecuentes</h2>
+            <h2 className={styles.faqTitle}>FAQ</h2>
             <div className={styles.faqGrid}>
               <div className={styles.faqItem}>
-                <h3 className={styles.faqQuestion}>¿Cómo se calculan las recompensas?</h3>
+                <h3 className={styles.faqQuestion}>How are rewards calculated?</h3>
                 <p className={styles.faqAnswer}>
-                  Las recompensas se distribuyen en ETH proporcional a tu stake. Por cada apertura
-                  de posición se distribuye el 1% del borrow, y por cada cierre el 1% del profit,
-                  entre todos los stakers.
+                  Rewards are distributed in ETH proportional to your stake. Each position open
+                  distributes 1% of the borrow, and each close distributes 1% of the profit,
+                  among all stakers.
                 </p>
               </div>
               <div className={styles.faqItem}>
-                <h3 className={styles.faqQuestion}>¿Puedo unstakear en cualquier momento?</h3>
+                <h3 className={styles.faqQuestion}>Can I unstake at any time?</h3>
                 <p className={styles.faqAnswer}>
-                  Sí, no hay período de lock. Puedes unstakear tus PEPS en cualquier momento
-                  sin penalizaciones. Las recompensas pendientes se acumulan hasta que las reclames.
+                  Yes, there is no lock period. You can unstake your PEPS at any time
+                  without penalties. Pending rewards accumulate until you claim them.
                 </p>
               </div>
               <div className={styles.faqItem}>
-                <h3 className={styles.faqQuestion}>¿Qué pasa con las liquidaciones?</h3>
+                <h3 className={styles.faqQuestion}>What happens with liquidations?</h3>
                 <p className={styles.faqAnswer}>
-                  Cuando se cierra una posición con profit, el 1% de ese profit va a stakers.
-                  En liquidaciones con surplus, también se distribuye el fee de cierre entre stakers.
+                  When a position is closed with profit, 1% of that profit goes to stakers.
+                  In liquidations with surplus, the close fee is also distributed among stakers.
                 </p>
               </div>
               <div className={styles.faqItem}>
-                <h3 className={styles.faqQuestion}>¿Cuáles son los riesgos?</h3>
+                <h3 className={styles.faqQuestion}>What are the risks?</h3>
                 <p className={styles.faqAnswer}>
-                  El contrato es un Uniswap V4 Hook. Los smart contracts no han sido auditados
-                  en mainnet. No arriesgues más de lo que puedes perder. El protocolo puede acumular
-                  bad debt si hay liquidaciones fallidas.
+                  The contract is a Uniswap V4 Hook. Smart contracts have not been audited
+                  on mainnet. Do not risk more than you can afford to lose. The protocol may
+                  accumulate bad debt if liquidations fail.
                 </p>
               </div>
             </div>

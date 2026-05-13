@@ -30,7 +30,7 @@ export default function TopBar() {
           </div>
           <div className={styles.statDivider} />
           <div className={styles.statItem}>
-            <span className={styles.statLabel}>Curva</span>
+            <span className={styles.statLabel}>Curve</span>
             <span className={`${styles.statValue} ${styles.positive}`}>
               {curveLevel > 0 ? `${curveLevel.toFixed(3)} ETH` : '—'}
             </span>
@@ -62,7 +62,7 @@ export default function TopBar() {
               </span>
             </div>
             <div className={styles.mobileStatItem}>
-              <span className={styles.statLabel}>Nivel Curva</span>
+              <span className={styles.statLabel}>Curve Level</span>
               <span className={styles.statValue}>
                 {curveLevel > 0 ? `${curveLevel.toFixed(3)} ETH` : '—'}
               </span>
