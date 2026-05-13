@@ -1,0 +1,395 @@
+.panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  height: fit-content;
+  position: sticky;
+  top: calc(72px + var(--spacing-lg));
+}
+
+.header {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   POSITION TOGGLE
+   ========================================== */
+
+.positionToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.toggleBtn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.toggleBtn.activeLong {
+  background: linear-gradient(135deg, var(--color-neon-green) 0%, #00cc66 100%);
+  color: #000;
+  border-color: var(--color-neon-green);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.toggleBtn.activeShort {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: #fff;
+  border-color: #ff4444;
+  box-shadow: 0 0 20px rgba(255, 68, 68, 0.3);
+}
+
+/* ==========================================
+   SECTIONS
+   ========================================== */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.leverageValue {
+  font-size: 1.1rem;
+  color: var(--color-neon-blue);
+  font-weight: 600;
+}
+
+/* ==========================================
+   LEVERAGE BUTTONS
+   ========================================== */
+
+.leverageButtons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.leverageBtn {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.leverageBtn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background: var(--gradient-glow);
+  border-radius: 50%;
+  transition: all var(--transition-base);
+  opacity: 0;
+}
+
+.leverageBtn:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.leverageBtn:hover::before {
+  width: 200%;
+  height: 200%;
+  opacity: 1;
+}
+
+.leverageBtn.active {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+/* ==========================================
+   INPUT GROUP
+   ========================================== */
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.input:focus {
+  border-color: var(--color-neon-blue);
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.1);
+}
+
+.input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.assetToggle {
+  display: flex;
+  background: var(--color-bg-tertiary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.assetBtn {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.assetBtn:hover {
+  color: var(--color-text-primary);
+}
+
+.assetBtn.activeAsset {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+}
+
+.balance {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+}
+
+.maxBtn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  color: var(--color-neon-blue);
+  border: 1px solid var(--color-neon-blue);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.maxBtn:hover {
+  background: var(--color-neon-blue);
+  color: var(--color-bg-primary);
+}
+
+/* ==========================================
+   CALCULATIONS
+   ========================================== */
+
+.calculations {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.calcRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calcLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calcValue {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.calcValue.warning {
+  color: #ff9800;
+}
+
+.infoIcon {
+  color: var(--color-text-tertiary);
+  cursor: help;
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitBtn:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.submitLong {
+  background: linear-gradient(135deg, var(--color-neon-green) 0%, #00cc66 100%);
+  color: #000;
+  box-shadow: 0 4px 16px rgba(0, 255, 136, 0.3);
+}
+
+.submitLong:not(:disabled):hover {
+  box-shadow: 0 8px 24px rgba(0, 255, 136, 0.5);
+}
+
+.submitShort {
+  background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255, 68, 68, 0.3);
+}
+
+.submitShort:not(:disabled):hover {
+  box-shadow: 0 8px 24px rgba(255, 68, 68, 0.5);
+}
+
+/* ==========================================
+   WARNING
+   ========================================== */
+
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.warning svg {
+  flex-shrink: 0;
+  color: #ff9800;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .panel {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: var(--spacing-lg);
+  }
+
+  .leverageButtons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .input {
+    font-size: 1.25rem;
+    padding: var(--spacing-md);
+  }
+
+  .submitBtn {
+    font-size: 1.1rem;
+    padding: var(--spacing-lg);
+  }
+}

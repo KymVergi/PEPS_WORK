@@ -1,0 +1,210 @@
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.content {
+  max-width: 100%;
+  padding: 0 var(--spacing-lg);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================
+   LOGO
+   ========================================== */
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  transition: all var(--transition-base);
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logoSymbol {
+  color: var(--color-neon-blue);
+  font-size: 1.8rem;
+}
+
+.logoText {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================
+   STATS
+   ========================================== */
+
+.stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex: 1;
+  justify-content: center;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.statValue.positive {
+  color: var(--color-text-success);
+}
+
+.statDivider {
+  width: 1px;
+  height: 32px;
+  background: var(--color-border);
+}
+
+/* ==========================================
+   WALLET
+   ========================================== */
+
+.walletSection {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.walletButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.walletButton:hover {
+  border-color: var(--color-border-hover);
+  background: var(--color-bg-tertiary);
+}
+
+.connectButton {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-glow);
+}
+
+.connectButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow), var(--shadow-md);
+}
+
+/* ==========================================
+   MOBILE MENU
+   ========================================== */
+
+.menuToggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  padding: var(--spacing-sm);
+}
+
+.mobileMenu {
+  display: none;
+  border-top: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  background: rgba(17, 17, 17, 0.98);
+}
+
+.mobileStats {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.mobileStatItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0 var(--spacing-md);
+  }
+
+  .stats {
+    display: none;
+  }
+
+  .menuToggle {
+    display: block;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+
+  .walletSection {
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .connectButton,
+  .walletButton {
+    font-size: 0.85rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}

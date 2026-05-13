@@ -1,0 +1,114 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.main {
+  margin-left: 240px;
+  padding-top: 72px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================
+   TRADING GRID
+   ========================================== */
+
+.tradingGrid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.chartSection {
+  height: 600px;
+  min-height: 500px;
+}
+
+.panelSection {
+  /* Panel tiene su propio sticky positioning */
+}
+
+/* ==========================================
+   POSITIONS SECTION
+   ========================================== */
+
+.positionsSection {
+  width: 100%;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1440px) {
+  .tradingGrid {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .tradingGrid {
+    grid-template-columns: 1fr 360px;
+  }
+  
+  .chartSection {
+    height: 550px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main {
+    margin-left: 72px;
+  }
+
+  .tradingGrid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .chartSection {
+    height: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    padding-top: 64px;
+  }
+
+  .container {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-lg);
+  }
+
+  .tradingGrid {
+    gap: var(--spacing-lg);
+  }
+
+  .chartSection {
+    height: 400px;
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: var(--spacing-md);
+  }
+
+  .chartSection {
+    height: 350px;
+    min-height: 300px;
+  }
+}

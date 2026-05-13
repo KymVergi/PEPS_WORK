@@ -1,0 +1,239 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+}
+
+/* ==========================================
+   STATS GRID
+   ========================================== */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.statCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all var(--transition-base);
+}
+
+.statCard:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+}
+
+.iconWrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.statContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.statLabel {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.statValue {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   USER CARD
+   ========================================== */
+
+.userCard {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.userHeader {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.userTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.userStats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.userStatItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.userStatLabel {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.userStatValue {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.userStatValue.rewards {
+  color: var(--color-neon-green);
+}
+
+.claimBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-glow);
+}
+
+.claimBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow), var(--shadow-md);
+}
+
+/* ==========================================
+   APY CARD
+   ========================================== */
+
+.apyCard {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.apyTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.apyList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.apyItem {
+  display: grid;
+  grid-template-columns: 100px 1fr 80px;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.apyPeriod {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.apyBar {
+  height: 8px;
+  background: var(--color-bg-elevated);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.apyFill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.apyValue {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-neon-green);
+  text-align: right;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .userStats {
+    grid-template-columns: 1fr;
+  }
+
+  .apyItem {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+
+  .apyBar {
+    order: 3;
+  }
+
+  .apyValue {
+    text-align: left;
+  }
+}

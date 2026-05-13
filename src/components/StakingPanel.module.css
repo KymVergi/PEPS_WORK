@@ -1,0 +1,371 @@
+.panel {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  height: fit-content;
+}
+
+.header {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   ACTION TOGGLE
+   ========================================== */
+
+.actionToggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-sm);
+}
+
+.toggleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.toggleBtn:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.toggleBtn.activeStake {
+  background: linear-gradient(135deg, var(--color-neon-blue) 0%, var(--color-neon-purple) 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+.toggleBtn.activeUnstake {
+  background: linear-gradient(135deg, #ff9800 0%, #ff6b00 100%);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+}
+
+/* ==========================================
+   SECTION
+   ========================================== */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.apyBadge {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================
+   PERIOD BUTTONS
+   ========================================== */
+
+.periodButtons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-sm);
+}
+
+.periodBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.periodBtn:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+}
+
+.periodBtn.active {
+  background: var(--gradient-primary);
+  color: var(--color-text-primary);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+.periodDays {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.periodLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.periodApy {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-neon-green);
+}
+
+/* ==========================================
+   INPUT
+   ========================================== */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: var(--spacing-lg);
+  padding-right: 80px;
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: all var(--transition-base);
+}
+
+.input:focus {
+  border-color: var(--color-neon-blue);
+  box-shadow: 0 0 0 4px rgba(0, 240, 255, 0.1);
+}
+
+.input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.inputSuffix {
+  position: absolute;
+  right: var(--spacing-lg);
+  pointer-events: none;
+}
+
+.assetSymbol {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.balance {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+}
+
+.maxBtn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: transparent;
+  color: var(--color-neon-blue);
+  border: 1px solid var(--color-neon-blue);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.maxBtn:hover {
+  background: var(--color-neon-blue);
+  color: var(--color-bg-primary);
+}
+
+.usdValue {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-tertiary);
+  text-align: right;
+}
+
+/* ==========================================
+   REWARDS CARD
+   ========================================== */
+
+.rewardsCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.rewardsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rewardsLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rewardsValue {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* ==========================================
+   SUBMIT BUTTON
+   ========================================== */
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: var(--spacing-xl);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submitBtn:not(:disabled):hover {
+  transform: translateY(-2px);
+}
+
+.submitStake {
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: var(--shadow-glow);
+}
+
+.submitStake:not(:disabled):hover {
+  box-shadow: var(--shadow-glow), var(--shadow-md);
+}
+
+.submitUnstake {
+  background: linear-gradient(135deg, #ff9800 0%, #ff6b00 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(255, 152, 0, 0.3);
+}
+
+.submitUnstake:not(:disabled):hover {
+  box-shadow: 0 8px 24px rgba(255, 152, 0, 0.5);
+}
+
+/* ==========================================
+   WARNING
+   ========================================== */
+
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: rgba(255, 152, 0, 0.1);
+  border: 1px solid rgba(255, 152, 0, 0.3);
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.warning svg {
+  flex-shrink: 0;
+  color: #ff9800;
+  margin-top: 2px;
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .panel {
+    padding: var(--spacing-lg);
+  }
+
+  .periodButtons {
+    grid-template-columns: 1fr;
+  }
+
+  .input {
+    font-size: 1.25rem;
+    padding: var(--spacing-md);
+    padding-right: 70px;
+  }
+
+  .submitBtn {
+    font-size: 1.1rem;
+    padding: var(--spacing-lg);
+  }
+}

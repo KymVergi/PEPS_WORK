@@ -1,0 +1,209 @@
+.page {
+  min-height: 100vh;
+  background: var(--color-bg-primary);
+}
+
+.main {
+  margin-left: 240px;
+  padding-top: 72px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+.header {
+  text-align: center;
+  padding: var(--spacing-xl) 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  margin-bottom: var(--spacing-md);
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==========================================
+   MAIN GRID
+   ========================================== */
+
+.mainGrid {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+.panelSection {
+  position: sticky;
+  top: calc(72px + var(--spacing-lg));
+}
+
+.statsSection {
+  /* Takes remaining space */
+}
+
+/* ==========================================
+   BENEFITS SECTION
+   ========================================== */
+
+.benefitsSection {
+  padding: var(--spacing-2xl) 0;
+}
+
+.benefitsTitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-text-primary);
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.benefitCard {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all var(--transition-base);
+}
+
+.benefitCard:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+}
+
+.benefitIcon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.benefitTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
+}
+
+.benefitText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================
+   FAQ SECTION
+   ========================================== */
+
+.faqSection {
+  padding: var(--spacing-2xl) 0;
+}
+
+.faqTitle {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  color: var(--color-text-primary);
+}
+
+.faqGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.faqItem {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.faqQuestion {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--color-text-primary);
+}
+
+.faqAnswer {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 1024px) {
+  .main {
+    margin-left: 72px;
+  }
+
+  .mainGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .panelSection {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    margin-left: 0;
+    padding-top: 64px;
+  }
+
+  .container {
+    padding: var(--spacing-lg);
+    gap: var(--spacing-xl);
+  }
+
+  .header {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .benefitsGrid,
+  .faqGrid {
+    grid-template-columns: 1fr;
+  }
+}

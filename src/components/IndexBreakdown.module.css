@@ -1,0 +1,272 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.totalWeight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.value {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ==========================================
+   GRID
+   ========================================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* ==========================================
+   CARD
+   ========================================== */
+
+.card {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.card:hover {
+  border-color: var(--color-border-hover);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.weightBadge {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.cardBody {
+  margin-bottom: var(--spacing-lg);
+}
+
+.componentName {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.componentSymbol {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.priceLabel {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.priceValue {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.change {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.change.positive {
+  background: rgba(0, 255, 136, 0.15);
+  color: var(--color-neon-green);
+}
+
+.change.negative {
+  background: rgba(255, 68, 68, 0.15);
+  color: #ff4444;
+}
+
+/* ==========================================
+   WEIGHT BAR
+   ========================================== */
+
+.weightBar {
+  width: 100%;
+  height: 4px;
+  background: var(--color-bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.weightFill {
+  height: 100%;
+  border-radius: 2px;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* ==========================================
+   COMPOSITION CHART
+   ========================================== */
+
+.compositionChart {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.chartTitle {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.chartBar {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-bg-elevated);
+}
+
+.chartSegment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+.chartSegment:hover {
+  filter: brightness(1.2);
+}
+
+.segmentLabel {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .totalWeight {
+    align-items: flex-start;
+  }
+
+  .compositionChart {
+    padding: var(--spacing-lg);
+  }
+
+  .chartBar {
+    height: 80px;
+    flex-direction: column;
+  }
+
+  .chartSegment {
+    width: 100% !important;
+    height: auto;
+    min-height: 40px;
+  }
+}
